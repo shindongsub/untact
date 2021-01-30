@@ -1,109 +1,75 @@
 package com.sbs.untact.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.dto.Util;
+import com.sbs.untact.service.ArticleService;
+
 //Port: 8021
 @Controller
 public class UsrArticleController {
-	private int articlesLastId;
-	private List<Article> articles;
-	
-	public UsrArticleController() {
-		articlesLastId = 0;
-		articles = new ArrayList<>();
-		
-		articles.add(new Article(++articlesLastId, "2020-12-12 12:12:12", "2020-12-12 12:12:12", "제목1", "내용1"));
-		articles.add(new Article(++articlesLastId, "2020-12-12 12:12:12", "2020-12-12 12:12:12", "제목2", "내용2"));
-	}
-	@RequestMapping ("/usr/article/detail")
+	@Autowired
+	private ArticleService articleService;
+
+	@RequestMapping("/usr/article/detail")
 	@ResponseBody
 	public Article showDetail(int id) {
-		return articles.get(id -1);
+		Article article = articleService.getArticle(id);
+		return article;
 	}
-	
-	@RequestMapping ("/usr/article/list")
+
+	@RequestMapping("/usr/article/list")
 	@ResponseBody
 	public List<Article> showList() {
 		
-		return articles;
+		return articleService.getArticles();
 	}
-	
-	@RequestMapping ("/usr/article/doAdd")
+
+	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public Map<String, Object> doAdd(String title, String body) {
-		String regDate = Util.getNowDateStr();
-		String updateDate = regDate;
+	public ResultData doAdd(String title, String body) {
+		if (title != null) {
+			return new ResultData("F-1", "title을 입력해주세요.");
+		}
+		if (body != null) {
+			return new ResultData("F-1", "body을 입력해주세요.");
+		}
 		
-		articles.add(new Article(++articlesLastId, regDate, updateDate, title, body));
-		
-		Map<String, Object> rs = new HashMap<>();
-		rs.put("resultCode", "S-1");
-		rs.put("msg", "성공하였습니다.");
-		rs.put("id", articlesLastId);
-		return rs;
+		return articleService.add(title, body);
 	}
-	@RequestMapping ("/usr/article/doDelete")
+
+	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public Map<String, Object> doDelete(int id) {
-		boolean deleteArticleRs = deleteArticle(id);
-		
-		Map<String, Object> rs = new HashMap<>();
-		
-		if (deleteArticleRs) {
-			rs.put("resultCode", "S-1");
-			rs.put("msg", "성공하였습니다.");
-			
-		}else {
-			rs.put("resultCode", "F-1");
-			rs.put("msg", "해당게시물은 존재하지 않습니다.");
+	public ResultData doDelete(int id) {
+		Article article = articleService.getArticle(id);
+		if (article == null) {
+			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+
 		}
 
-		return rs;
-		
-	
-	}
-	@RequestMapping ("/usr/article/doModify")
-	@ResponseBody
-	public Map<String, Object> doModify(int id, String title, String body) {
-		Article selArticle = null;
-		for (Article article : articles) {
-			selArticle = article;
-			break;
-		}
-		Map<String, Object> rs = new HashMap<>();
-		if (selArticle == null) {
-			rs.put("resultCode", "F-1");
-			rs.put("msg", String.format("%d번 게시물은 존재하지 않습니다.", id));
-		}
-		selArticle.setRegDate(Util.getNowDateStr());
-		selArticle.setTitle(title);
-		selArticle.setBody(body);
-		rs.put("resultCode", "S-1");
-		rs.put("msg", String.format("%d번 수정이 완료되었습니다.", id));
-		rs.put("id", id);
-		return rs;
-	}
-	private boolean deleteArticle(int id) {
-		for (Article article : articles) {
-			if (article.getId() == id) {
-				articles.remove(article);
+		return articleService.deleteArticle(id);
 
-				return true;
-			}
-		}
-		return false;
-		
+
 	}
-	
-	
-	
+
+	@RequestMapping("/usr/article/doModify")
+	@ResponseBody
+	public ResultData doModify(int id, String title, String body) {
+		Article article = articleService.getArticle(id);
+		if (article == null) {
+			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+		}
+		return articleService.modify(id, title, body);
+	}
+
+
 }
