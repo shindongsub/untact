@@ -4,10 +4,11 @@ public class Article {
 	
 	private int id;
 	private String regDate;
+	private String updateDate;
 	private String title;
 	private String body;
 
-	public Article(int id, String regDate, String title, String body) {
+	public Article(int id, String updateDate, String regDate, String title, String body) {
 		this.id = id;
 		this.regDate = regDate;
 		this.title = title;
@@ -20,6 +21,13 @@ public class Article {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public String getRegDate() {
@@ -48,8 +56,10 @@ public class Article {
 
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", regDate=" + regDate + ", title=" + title + ", body=" + body + "]";
+		return "Article [id=" + id + ", regDate=" + regDate + ", updateDate=" + updateDate + ", title=" + title
+				+ ", body=" + body + "]";
 	}
 	
+
 
 }
