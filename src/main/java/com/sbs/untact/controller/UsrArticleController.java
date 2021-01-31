@@ -34,16 +34,16 @@ public class UsrArticleController {
 		if (serarchKeywordType != null) {
 			serarchKeywordType = serarchKeywordType.trim();
 		}
-		
-		if(serarchKeywordType == null || serarchKeywordType.length() == 0) {
+
+		if (serarchKeywordType == null || serarchKeywordType.length() == 0) {
 			serarchKeywordType = "titleAndBody";
 		}
-		
+
 		if (serarchKeyword != null && serarchKeyword.length() == 0) {
 			serarchKeyword = null;
 		}
-		if(serarchKeyword != null) {
-			serarchKeyword = serarchKeyword.trim(); //trim 글씨 양옆에 공백 날리기 
+		if (serarchKeyword != null) {
+			serarchKeyword = serarchKeyword.trim(); // trim 글씨 양옆에 공백 날리기
 		}
 		return articleService.getArticles(serarchKeywordType, serarchKeyword);
 	}
@@ -57,14 +57,14 @@ public class UsrArticleController {
 		if (body != null) {
 			return new ResultData("F-1", "body을 입력해주세요.");
 		}
-		
-		return articleService.add(title, body);
+
+		return articleService.addArticle(title, body);
 	}
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id) {
-		if(id==null) {
+		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요..");
 		}
 		Article article = articleService.getArticle(id);
@@ -75,28 +75,26 @@ public class UsrArticleController {
 
 		return articleService.deleteArticle(id);
 
-
 	}
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(@RequestParam(defaultValue = "0")Integer id, String title, String body) {
-		if(id==null) {
+	public ResultData doModify(@RequestParam(defaultValue = "0") Integer id, String title, String body) {
+		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요..");
 		}
-		if(title==null) {
+		if (title == null) {
 			return new ResultData("F-1", "title을 입력해주세요..");
 		}
-		if(body==null) {
+		if (body == null) {
 			return new ResultData("F-1", "body를 입력해주세요..");
 		}
-		
+
 		Article article = articleService.getArticle(id);
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
-		return articleService.modify(id, title, body);
+		return articleService.modifyArticle(id, title, body);
 	}
-
 
 }
