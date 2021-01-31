@@ -1,4 +1,4 @@
-package com.sbs.untact.dto;
+package com.sbs.untact.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

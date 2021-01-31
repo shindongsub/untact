@@ -2,11 +2,11 @@ package com.sbs.untact.dto;
 
 import java.util.Map;
 
+import com.sbs.untact.util.Util;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class ResultData {
 	private String resultCode;
 	private String msg;
@@ -17,10 +17,15 @@ public class ResultData {
 		this.msg = msg;
 		this.body = Util.mapOf(args);
 	}
+	
 	public boolean isSuccess() {
 		return resultCode.startsWith("S-");
 	}
-	public boolean isfail() {
+	
+	public boolean isFail() {
 		return isSuccess() == false;
 	}
 }
+
+
+

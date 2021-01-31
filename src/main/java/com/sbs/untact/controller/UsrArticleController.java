@@ -1,21 +1,16 @@
 package com.sbs.untact.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.ResultData;
-import com.sbs.untact.dto.Util;
 import com.sbs.untact.service.ArticleService;
 
-//Port: 8021
 @Controller
 public class UsrArticleController {
 	@Autowired
@@ -25,37 +20,41 @@ public class UsrArticleController {
 	@ResponseBody
 	public Article showDetail(int id) {
 		Article article = articleService.getArticle(id);
+
 		return article;
 	}
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public List<Article> showList(String serarchKeywordType, String serarchKeyword) {
-		if (serarchKeywordType != null) {
-			serarchKeywordType = serarchKeywordType.trim();
+	public List<Article> showList(String searchKeywordType, String searchKeyword) {
+		if (searchKeywordType != null) {
+			searchKeywordType = searchKeywordType.trim();
 		}
 
-		if (serarchKeywordType == null || serarchKeywordType.length() == 0) {
-			serarchKeywordType = "titleAndBody";
+		if (searchKeywordType == null || searchKeywordType.length() == 0) {
+			searchKeywordType = "titleAndBody";
 		}
 
-		if (serarchKeyword != null && serarchKeyword.length() == 0) {
-			serarchKeyword = null;
+		if (searchKeyword != null && searchKeyword.length() == 0) {
+			searchKeyword = null;
 		}
-		if (serarchKeyword != null) {
-			serarchKeyword = serarchKeyword.trim(); // trim 글씨 양옆에 공백 날리기
+
+		if (searchKeyword != null) {
+			searchKeyword = searchKeyword.trim();
 		}
-		return articleService.getArticles(serarchKeywordType, serarchKeyword);
+
+		return articleService.getArticles(searchKeywordType, searchKeyword);
 	}
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public ResultData doAdd(String title, String body) {
-		if (title != null) {
+		if (title == null) {
 			return new ResultData("F-1", "title을 입력해주세요.");
 		}
-		if (body != null) {
-			return new ResultData("F-1", "body을 입력해주세요.");
+
+		if (body == null) {
+			return new ResultData("F-1", "body를 입력해주세요.");
 		}
 
 		return articleService.addArticle(title, body);
@@ -65,36 +64,39 @@ public class UsrArticleController {
 	@ResponseBody
 	public ResultData doDelete(Integer id) {
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요..");
+			return new ResultData("F-1", "id를 입력해주세요.");
 		}
+
 		Article article = articleService.getArticle(id);
+
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
-
 		}
 
 		return articleService.deleteArticle(id);
-
 	}
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(@RequestParam(defaultValue = "0") Integer id, String title, String body) {
+	public ResultData doModify(Integer id, String title, String body) {
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요..");
+			return new ResultData("F-1", "id를 입력해주세요.");
 		}
+
 		if (title == null) {
-			return new ResultData("F-1", "title을 입력해주세요..");
+			return new ResultData("F-1", "title을 입력해주세요.");
 		}
+
 		if (body == null) {
-			return new ResultData("F-1", "body를 입력해주세요..");
+			return new ResultData("F-1", "body를 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
+
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
+
 		return articleService.modifyArticle(id, title, body);
 	}
-
 }
