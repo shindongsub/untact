@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
@@ -29,9 +30,22 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public List<Article> showList() {
+	public List<Article> showList(String serarchKeywordType, String serarchKeyword) {
+		if (serarchKeywordType != null) {
+			serarchKeywordType = serarchKeywordType.trim();
+		}
 		
-		return articleService.getArticles();
+		if(serarchKeywordType == null || serarchKeywordType.length() == 0) {
+			serarchKeywordType = "titleAndBody";
+		}
+		
+		if (serarchKeyword != null && serarchKeyword.length() == 0) {
+			serarchKeyword = null;
+		}
+		if(serarchKeyword != null) {
+			serarchKeyword = serarchKeyword.trim(); //trim 글씨 양옆에 공백 날리기 
+		}
+		return articleService.getArticles(serarchKeywordType, serarchKeyword);
 	}
 
 	@RequestMapping("/usr/article/doAdd")
@@ -49,7 +63,10 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(int id) {
+	public ResultData doDelete(Integer id) {
+		if(id==null) {
+			return new ResultData("F-1", "id를 입력해주세요..");
+		}
 		Article article = articleService.getArticle(id);
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
@@ -63,7 +80,17 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(int id, String title, String body) {
+	public ResultData doModify(@RequestParam(defaultValue = "0")Integer id, String title, String body) {
+		if(id==null) {
+			return new ResultData("F-1", "id를 입력해주세요..");
+		}
+		if(title==null) {
+			return new ResultData("F-1", "title을 입력해주세요..");
+		}
+		if(body==null) {
+			return new ResultData("F-1", "body를 입력해주세요..");
+		}
+		
 		Article article = articleService.getArticle(id);
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");

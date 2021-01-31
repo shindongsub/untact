@@ -18,8 +18,8 @@ public class ArticleService {
 		articlesLastId = 0;
 		articles = new ArrayList<>();
 
-		articles.add(new Article(++articlesLastId, "2020-12-12 12:12:12", "2020-12-12 12:12:12", "제목1", "내용1"));
-		articles.add(new Article(++articlesLastId, "2020-12-12 12:12:12", "2020-12-12 12:12:12", "제목2", "내용2"));
+		articles.add(new Article(++articlesLastId, "2020-12-12 12:12:12", "2020-12-12 12:12:12", "제목1 입니다.", "내용1 입니다."));
+		articles.add(new Article(++articlesLastId, "2020-12-12 12:12:12", "2020-12-12 12:12:12", "제목2 입니다.", "내용2 입니다."));
 	}
 
 	public Article getArticle(int id) {
@@ -31,8 +31,33 @@ public class ArticleService {
 		return null;
 	}
 
-	public List<Article> getArticles() {
-		return articles;
+	public List<Article> getArticles(String serarchKeywordType, String serarchKeyword) {
+		if(serarchKeyword == null) {
+			return articles;
+		}
+		List<Article> filtered = new ArrayList<>();
+		for(Article article : articles) {
+			boolean contains = false;
+			
+			if (serarchKeywordType.equals("title")) {
+				contains = article.getTitle().contains(serarchKeyword);
+			}
+			else if (serarchKeywordType.equals("body")) {
+				contains = article.getBody().contains(serarchKeyword);
+			}
+			else {
+				contains = article.getTitle().contains(serarchKeyword);
+				if(contains == false) {
+					contains = article.getBody().contains(serarchKeyword);
+				}
+			}
+			if (contains) {
+				filtered.add(article);
+			}
+
+
+		}
+		return filtered;
 	}
 
 	public ResultData add(String title, String body) {
