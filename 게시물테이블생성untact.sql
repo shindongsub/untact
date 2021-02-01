@@ -30,3 +30,11 @@ SET regDate = NOW(),
 updateDate = NOW(),
 title = "제목3 입니다.",
 `body` = "내용3 입니다.";
+
+SELECT * FROM article;
+
+SELECT *
+FROM article
+WHERE title LIKE CONCAT('%', '2', '%');
+
+SELECT CONCAT('안', '녕', '하');

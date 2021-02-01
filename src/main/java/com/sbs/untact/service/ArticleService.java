@@ -1,13 +1,16 @@
 package com.sbs.untact.service;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sbs.untact.dao.ArticleDao;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.ResultData;
+import com.sbs.untact.util.Util;
 
 @Service
 public class ArticleService {
@@ -18,10 +21,10 @@ public class ArticleService {
 		return articleDao.getArticle(id);
 	}
 
-	public ResultData addArticle(String title, String body) {
-		articleDao.addArticle(title, body);
+	public ResultData addArticle(Map<String, Object> param) {
+		articleDao.addArticle(param);
 
-		int id = 1; // 임시
+		int id = Util.getAsInt(param.get("id"), 0);
 
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
 	}
