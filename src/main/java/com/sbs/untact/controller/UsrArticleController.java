@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
-
+//39강 할차례 입니다.
 @Controller
 public class UsrArticleController {
 	@Autowired
@@ -47,7 +47,7 @@ public class UsrArticleController {
 		if (searchKeyword == null) {
 			searchKeywordType = null;
 		}
-
+		
 		return articleService.getArticles(searchKeywordType, searchKeyword);
 	}
 
