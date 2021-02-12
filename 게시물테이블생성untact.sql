@@ -42,3 +42,11 @@ SELECT CONCAT('안', '녕', '하');
 
 #게시물 테이블에 회원번호 칼럼 추가
 ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+SELECT * FROM article;
+
+UPDATE article
+SET memberId = 1
+WHERE memberId = 0;
+
+SELECT * FROM article;
