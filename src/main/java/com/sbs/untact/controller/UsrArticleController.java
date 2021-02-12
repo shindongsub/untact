@@ -15,7 +15,7 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.util.Util;
-//39강 할차례 입니다.
+//49강 할차례 입니다.
 @Controller
 public class UsrArticleController {
 	@Autowired
@@ -23,10 +23,16 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/detail")
 	@ResponseBody
-	public Article showDetail(int id) {
-		Article article = articleService.getArticle(id);
-
-		return article;
+	public ResultData showDetail(Integer id) {
+		if (id == null) {
+			return new ResultData("F-1","id를 입력해주세요.");
+		}
+		
+		Article article = articleService.getPringtArticle(id);
+		if(article == null) {
+			return new ResultData("F-2","존재하지 않는 게시물 번호입니다..");
+		}
+		return new ResultData("S-1","성공", "article", article);
 	}
 
 	@RequestMapping("/usr/article/list")

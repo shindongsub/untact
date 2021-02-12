@@ -61,4 +61,8 @@ public class ArticleService {
 	public ResultData getActorCanDeleteRd(Article article, int actorId) {
 		return getActorCanModifyRd(article, actorId);
 	}
+
+	public Article getPringtArticle(int id) {
+		return articleDao.getForPrintArticle(id);
+	}
 }
