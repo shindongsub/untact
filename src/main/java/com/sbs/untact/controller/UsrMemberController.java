@@ -52,6 +52,10 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
+		if (session.getAttribute("loginedMemberId") != null){
+			return new ResultData("F-4", "이미 로그인 되었습니다.", "loginId", loginId);
+		}
+		
 		if (loginId == null) {
 			return new ResultData("F-1", "loginId을 입력해주세요.");
 		}
@@ -59,7 +63,7 @@ public class UsrMemberController {
 		Member existingMember = memberService.getMemberByLoginId(loginId);
 		
 		if (existingMember == null) {
-			return new ResultData("F-2", "존재하지 않는 로그인 아이디 입니다.");
+			return new ResultData("F-2", "존재하지 않는 로그인 아이디 입니다.", "loginId", loginId);
 		}
 
 		if (loginPw == null) {
