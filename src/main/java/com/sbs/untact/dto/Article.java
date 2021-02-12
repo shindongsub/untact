@@ -13,6 +13,7 @@ public class Article {
 	private String regDate;
 	private String updateDate;
 	private String title;
+	private int memberid;
 	private String body;
 
 }
