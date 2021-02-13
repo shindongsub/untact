@@ -28,10 +28,7 @@ public class UsrMemberController {
 			return new ResultData("F-1", "loginId을 입력해주세요.");
 		}
 		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
-		
-		if (existingMember != null) {
-			return new ResultData("F-2", String.format("%s (은)는 이미 사용중인 로그인 아이디 입니다.", param.get("loginId")));
-		}
+
 
 		if (param.get("loginPw") == null) {
 			return new ResultData("F-1", "loginPw를 입력해주세요.");
@@ -52,10 +49,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
-		if (session.getAttribute("loginedMemberId") != null){
-			return new ResultData("F-4", "이미 로그인 되었습니다.", "loginId", loginId);
-		}
-		
+
 		if (loginId == null) {
 			return new ResultData("F-1", "loginId을 입력해주세요.");
 		}
@@ -81,9 +75,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
 	public ResultData doLogout(HttpSession session) {
-		if (session.getAttribute("loginedMemberId") == null) {
-			return new ResultData("S-2", "이미 로그아웃 되었습니다.");
-		}
+
 		session.removeAttribute("loginedMemberId");
 		return new ResultData("S-1", "로그아웃 되었습니다.");
 	}
@@ -91,9 +83,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpSession session) {
-		if (session.getAttribute("loginedMemberId") == null) {
-			return new ResultData("F-1", "로그인 후 이용해 주세요");
-		}
+
 		//isEmpty = 맵이 비어있다라는 뜻.
 		if(param.isEmpty()) {
 			return new ResultData("F-2", "수정할 정보를 입력해 주세요.");
