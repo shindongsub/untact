@@ -57,7 +57,7 @@ public class UsrArticleController {
 			searchKeywordType = null;
 		}
 		List<Article> articles = articleService.getForPrintArticles(searchKeywordType, searchKeyword);
-		return  new ResultData("S-2", "성공", "articles", articles);
+		return  new ResultData("S-1", "성공", "articles", articles);
 	}
 
 	@RequestMapping("/usr/article/doAdd")

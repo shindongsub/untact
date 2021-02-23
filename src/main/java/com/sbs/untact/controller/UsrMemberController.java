@@ -15,7 +15,7 @@ import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.MemberService;
 
-//41강 할차례 입니다.
+
 @Controller
 public class UsrMemberController {
 	@Autowired
