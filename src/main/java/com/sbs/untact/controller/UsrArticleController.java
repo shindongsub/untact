@@ -15,7 +15,7 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.util.Util;
-//49강 할차례 입니다.
+//55강 할차례 입니다.
 @Controller
 public class UsrArticleController {
 	@Autowired
@@ -37,7 +37,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	public ResultData showList(String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1")int page) {
+	public ResultData showList(@RequestParam(defaultValue = "1")int boardId, String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1")int page) {
 		if (searchKeywordType != null) {
 			searchKeywordType = searchKeywordType.trim();
 		}
@@ -58,7 +58,7 @@ public class UsrArticleController {
 		}
 
 		int itemsInAPage = 20;
-		List<Article> articles = articleService.getForPrintArticles(searchKeywordType, searchKeyword, page, itemsInAPage);
+		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page, itemsInAPage);
 		return  new ResultData("S-2", "성공", "articles", articles);
 	}
 

@@ -66,11 +66,11 @@ public class ArticleService {
 		return articleDao.getForPrintArticle(id);
 	}
 
-	public List<Article> getForPrintArticles(String searchKeywordType, String searchKeyword, int page, int itemsInAPage) {
+	public List<Article> getForPrintArticles(int boardId, String searchKeywordType, String searchKeyword, int page, int itemsInAPage) {
 		int limitFrom = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 		
 		
-		return articleDao.getForPrintArticles(searchKeywordType, searchKeyword, limitFrom, limitTake);
+		return articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitFrom, limitTake);
 	}
 }
