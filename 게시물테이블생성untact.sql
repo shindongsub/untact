@@ -80,3 +80,9 @@ email = "dddd@ddd.com";
 
 SELECT * FROM article;
 SELECT * FROM `member`;
+
+/*
+insert into article (regDate, updateDate, memberId, title, `body`)
+select now(), NOW(), FLOOR(RAND()*2+1), concat('제목_', FLOOR(RAND()*1000+1)), CONCAT('내용_', FLOOR(RAND()*1000+1))
+from article;
+*/
