@@ -70,11 +70,20 @@
 		INSERT INTO article
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		title =
-		#{title},
+		title = #{title},
 		`body` = #{body},
 		memberId = #{memberId}
 	</insert>
+	
+	<insert id="addReply" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO reply
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		articleId = #{articleId},
+		memberId = #{memberId},
+		`body` = #{body}
+	</insert>
+	
 	<delete id="deleteArticle">
 		DELETE FROM article
 		WHERE id = #{id}

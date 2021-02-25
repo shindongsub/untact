@@ -69,6 +69,21 @@ public class UsrArticleController {
 		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page, itemsInAPage);
 		return  new ResultData("S-2", "성공", "articles", articles);
 	}
+	
+	@RequestMapping("/usr/article/doAddReply")
+	@ResponseBody
+	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpSession session) {
+		int loginedMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+
+		if (param.get("body") == null) {
+			return new ResultData("F-1", "body를 입력해주세요.");
+		}
+		if (param.get("articleId") == null) {
+			return new ResultData("F-1", "articleId를 입력해주세요.");
+		}
+		param.put("memberId", loginedMemberId);
+		return articleService.addReply(param);
+	}
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
