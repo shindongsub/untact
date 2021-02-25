@@ -65,6 +65,31 @@ public class UsrRepliesController {
 
 		return replisService.deleteReply(relId);
 	}
+	@RequestMapping("/usr/reply/doModify")
+	@ResponseBody
+	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
+		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
+
+		
+		if (id == null) {
+			return new ResultData("F-1", "id를 입력해주세요.");
+		}
+		if (body == null) {
+			return new ResultData("F-1", "body를 입력해주세요.");
+		}
+
+		Reply reply = replisService.getReply(id);
+
+		if (reply == null) {
+			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
+		}
+		ResultData getActorCanModifyRd = replisService.getActorCanModifyRd(reply, loginedMemberId);
+		if(getActorCanModifyRd.isFail()) {
+			return getActorCanModifyRd;
+		}
+
+		return replisService.modifyReply(id, body);
+	}
 }
 
 
