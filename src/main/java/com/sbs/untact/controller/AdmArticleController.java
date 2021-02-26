@@ -17,11 +17,11 @@ import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 //61강 할차례 입니다.
 @Controller
-public class UsrArticleController {
+public class AdmArticleController {
 	@Autowired
 	private ArticleService articleService;
 
-	@RequestMapping("/usr/article/detail")
+	@RequestMapping("/adm/article/detail")
 	@ResponseBody
 	public ResultData showDetail(Integer id) {
 		if (id == null) {
@@ -35,7 +35,7 @@ public class UsrArticleController {
 		return new ResultData("S-1","성공", "article", article);
 	}
 
-	@RequestMapping("/usr/article/list")
+	@RequestMapping("/adm/article/list")
 	@ResponseBody
 	public ResultData showList(@RequestParam(defaultValue = "1")int boardId, String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1")int page) {
 		
@@ -69,7 +69,7 @@ public class UsrArticleController {
 		return  new ResultData("S-2", "성공", "articles", articles);
 	}
 	
-	@RequestMapping("/usr/article/doAddReply")
+	@RequestMapping("/adm/article/doAddReply")
 	@ResponseBody
 	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
@@ -84,7 +84,7 @@ public class UsrArticleController {
 		return articleService.addReply(param);
 	}
 
-	@RequestMapping("/usr/article/doAdd")
+	@RequestMapping("/adm/article/doAdd")
 	@ResponseBody
 	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
@@ -100,7 +100,7 @@ public class UsrArticleController {
 		return articleService.addArticle(param);
 	}
 
-	@RequestMapping("/usr/article/doDelete")
+	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
@@ -122,7 +122,7 @@ public class UsrArticleController {
 		return articleService.deleteArticle(id);
 	}
 
-	@RequestMapping("/usr/article/doModify")
+	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
 	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
