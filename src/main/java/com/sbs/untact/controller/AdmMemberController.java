@@ -21,6 +21,13 @@ public class AdmMemberController {
 	@Autowired
 	private MemberService memberService;
 
+	@RequestMapping("/adm/member/login")
+	public String login() {
+		return "adm/member/login";
+
+	}
+
+		
 	@RequestMapping("/adm/member/doLogin")
 	@ResponseBody
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
