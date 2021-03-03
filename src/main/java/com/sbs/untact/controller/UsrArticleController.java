@@ -1,6 +1,8 @@
 package com.sbs.untact.controller;
 
 import java.util.List;
+
+//67강할차례입니다.
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,6 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
-//61강 할차례 입니다.
 @Controller
 public class UsrArticleController {
 	@Autowired
