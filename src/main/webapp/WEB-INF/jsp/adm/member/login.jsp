@@ -30,12 +30,14 @@
 		class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4">
 			<div class="logo-bar flex justify-center mt-5">
-				<a href="#" class="logo"> <span><i
-						class="fas fa-fingerprint"></i></span> <span>UNTACT</span>
+				<a href="#" class="logo">
+					<span>
+						<i class="fas fa-fingerprint"></i>
+					</span>
+					<span>UNTACT</span>
 				</a>
 			</div>
-			<form
-				action="doLogin" method="POST"
+			<form action="doLogin" method="POST"
 				onsubmit="LoginForm__checkAndSubmit(this); return false;">
 				<div class="flex flex-col mb-4 md:flex-row mt-4">
 					<div class="p-1 md:w-36 md:flex md:items-center">
@@ -74,5 +76,4 @@
 
 	</div>
 </section>
-</body>
-</html>
+<%@ include file="../part/foot.jspf"%>
