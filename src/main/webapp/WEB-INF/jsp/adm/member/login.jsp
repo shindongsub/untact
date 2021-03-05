@@ -34,7 +34,7 @@
 					<span>
 						<i class="fas fa-fingerprint"></i>
 					</span>
-					<span>UNTACT</span>
+					<span>UNTACT ADMIN</span>
 				</a>
 			</div>
 			<form action="doLogin" method="POST"
