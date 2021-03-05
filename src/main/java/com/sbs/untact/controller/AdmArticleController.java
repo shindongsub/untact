@@ -15,6 +15,8 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
+
+// 74강부터 다시들으세요.
 @Controller
 public class AdmArticleController {
 	@Autowired
