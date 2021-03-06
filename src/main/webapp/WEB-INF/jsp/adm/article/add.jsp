@@ -11,7 +11,7 @@
 			<input type="hidden" name="boardId" value="${param.boardId}" />
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
-					<span>제목</span>
+					<span>제목</span>  
 				</div>
 				<div class="lg:flex-grow">
 					<input type="text" name="title" autofocus="autofocus"
