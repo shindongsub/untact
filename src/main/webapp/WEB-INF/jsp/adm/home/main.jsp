@@ -2,9 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
-	<div class="bg-white shadow-md rounded container mx-auto px-8 pt-6 pb-8 mt-8">
-	Lorem <br>
-	ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis quas consequuntur eaque cum eius quasi magni asperiores corporis omnis quisquam pariatur fugit nostrum soluta adipisci et voluptatem nihil in obcaecati.
-	</div>
+<section class="section-1">
+	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure
+		asperiores quisquam quod repellendus harum quo perspiciatis unde
+		aliquam aliquid illo sed similique hic ab temporibus ipsa optio quam.
+		Delectus laboriosam.</div>
+</section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>
