@@ -10,13 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 
-// 74강부터 다시들으세요.
+// 93강부터 다시들으세요.
 @Controller
 public class AdmArticleController extends BaseController{
 	@Autowired
@@ -94,7 +96,14 @@ public class AdmArticleController extends BaseController{
 	
 	@RequestMapping("/adm/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
+			MultipartRequest multipartRequest) { //MultipartRequest파일업로드시 필요
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+		if (true) {
+			return new ResultData("S-1", "테스트", "fileMap.keySet", fileMap.keySet());
+			
+		}
+		
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 		
 		if (param.get("title") == null) {

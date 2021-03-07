@@ -7,11 +7,12 @@
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		<form action="doAdd" method="POST">
+		<form action="doAdd" method="POST" enctype="multipart/form-data">
+			<!-- /enctype="multipart/form-data" 첨부파일 form안에 파일을 입력하려면 데이타가 엄청나게 다른형식으로 나간다. jsp에선 엄청나게 복잡하지만 스트링 부트에선 그럴필요없이 이거면 된다. -->
 			<input type="hidden" name="boardId" value="${param.boardId}" />
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
-					<span>제목</span>  
+					<span>제목</span>
 				</div>
 				<div class="lg:flex-grow">
 					<input type="text" name="title" autofocus="autofocus"
@@ -23,7 +24,26 @@
 					<span>내용</span>
 				</div>
 				<div class="lg:flex-grow">
-					<textarea name="body" class="form-row-input w-full rounded-sm" placeholder="내용을 입력해주세요."></textarea>
+					<textarea name="body" class="form-row-input w-full rounded-sm"
+						placeholder="내용을 입력해주세요."></textarea>
+				</div>
+			</div>
+			<div class="form-row flex flex-col lg:flex-row">
+				<div class="lg:flex lg:items-center lg:w-28">
+					<span>첨부파일 1</span>
+				</div>
+				<div class="lg:flex-grow">
+					<input type="file" name="file__article__0__common__attachment__1"
+						class="form-row-input w-full rounded-sm" />
+				</div>
+			</div>
+			<div class="form-row flex flex-col lg:flex-row">
+				<div class="lg:flex lg:items-center lg:w-28">
+					<span>첨부파일 2</span>
+				</div>
+				<div class="lg:flex-grow">
+					<input type="file" name="file__article__0__common__attachment__2"
+						class="form-row-input w-full rounded-sm" />
 				</div>
 			</div>
 			<div class="form-row flex flex-col lg:flex-row">
@@ -32,8 +52,12 @@
 				</div>
 				<div class="lg:flex-grow">
 					<div class="btns">
-						<input type="submit" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="작성">
-						<input onclick="history.back();" type="button" class="btn-info bg-red-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded" value="취소">
+						<input type="submit"
+							class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+							value="작성"> <input onclick="history.back();"
+							type="button"
+							class="btn-info bg-red-500 hover:bg-red-dark text-white font-bold py-2 px-4 rounded"
+							value="취소">
 					</div>
 				</div>
 			</div>
