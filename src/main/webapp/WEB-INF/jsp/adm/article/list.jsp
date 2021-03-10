@@ -4,6 +4,10 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
+
+<script>
+	param.boardId = parseInt("${board.id}");
+</script>
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<div class="flex items-center">
@@ -12,13 +16,14 @@
 				<option value="2">자유게시판</option>
 			</select>
 			<script>
-			$('.section-1 .select-board-id').val(param.boardId); //공지사항 자유게시판 boardId=1, 2로했을때 자동으로 바뀌는.
-			$('.section-1 .select-board-id').change(function(){
-				location.href='?boardId='+this.value;
+				$('.section-1 .select-board-id').val(param.boardId); //공지사항 자유게시판 boardId=1, 2로했을때 자동으로 바뀌는.
+				$('.section-1 .select-board-id').change(function() {
+					location.href = '?boardId=' + this.value;
 				});
 			</script>
 			<div class="flex-grow"></div>
-			<a href="add?boardId=${param.boardId}" class="bg-blue-400 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">글쓰기</a>
+			<a href="add?boardId=${param.boardId}"
+				class="bg-blue-400 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">글쓰기</a>
 		</div>
 		<div>
 			<c:forEach items="${articles}" var="article">
@@ -32,7 +37,9 @@
 						class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 					<p class="mt-2 text-gray-600">${article.body}</p>
 					<div>
-						<img src="${article.extra__thumbImg}" alt="" />
+						<C:if test="${article.extra__thumbImg != null}">
+							<img src="${article.extra__thumbImg}" alt="" />
+						</C:if>
 					</div>
 				</div>
 				<div class="flex justify-between items-center mt-4">
