@@ -3,61 +3,64 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
+
+<c:set var="fileInputMaxCount" value="10" />
+<script>
+ArticleAdd__fileInputMaxCount = parseInt("${fileInputMaxCount}");
+</script>
+
 <script>
 ArticleAdd__submited = false;
-function ArticleAdd__checkAndSubmit(form){
-	if (ArticleAdd__submited){
+function ArticleAdd__checkAndSubmit(form) {
+	if ( ArticleAdd__submited ) {
 		alert('처리중입니다.');
 		return;
 	}
 	
 	form.title.value = form.title.value.trim();
-	if (form.title.value.length == 0){
-		alert('제목을 입력해 주세요.');
+	if ( form.title.value.length == 0 ) {
+		alert('제목을 입력해주세요.');
 		form.title.focus();
 		return false;
 	}
-	
 	form.body.value = form.body.value.trim();
-	if (form.body.value.length == 0){
-		alert('내용을 입력해 주세요.');
+	if ( form.body.value.length == 0 ) {
+		alert('내용을 입력해주세요.');
 		form.body.focus();
 		return false;
 	}
-	var maxSizeMb = 50; // 50MB 사이즈제한
+	var maxSizeMb = 50;
 	var maxSize = maxSizeMb * 1024 * 1024;
-	if (form.file__article__0__common__attachment__1.value) {
-		if (form.file__article__0__common__attachment__1.files[0].size > maxSize) {
-			alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
-			form.file__article__0__common__attachment__1.focus();
-			return;
+	for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
+		const input = form["file__article__0__common__attachment__" + inputNo];
+		
+		if (input.value) {
+			if (input.files[0].size > maxSize) {
+				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+				input.focus();
+				
+				return;
+			}
 		}
 	}
-	
-	if (form.file__article__0__common__attachment__2.value) {
-		if (form.file__article__0__common__attachment__2.files[0].size > maxSize) {
-			alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
-			form.file__article__0__common__attachment__2.focus();
-			return;
-		}
-	}
-	const startSubmitForm = function(data) {
-		let genFileIdsStr = '';
-		if (data && data.body && data.body.genFileIdsStr) {
-			genFileIdsStr = data.body.genFileIdsStr;
 		}
 		
 		form.genFileIdsStr.value = genFileIdsStr;
-		
-		form.file__article__0__common__attachment__1.value = '';
-		form.file__article__0__common__attachment__2.value = '';
+		for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
+			const input = form["file__article__0__common__attachment__" + inputNo];
+			input.value = '';
+		}
 		
 		form.submit();
 	};
 	const startUploadFiles = function(onSuccess) {
-		var needToUpload = form.file__article__0__common__attachment__1.value.length > 0;
-		if (!needToUpload) {
-			needToUpload = form.file__article__0__common__attachment__2.value.length > 0;
+		var needToUpload = false;
+		for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
+			const input = form["file__article__0__common__attachment__" + inputNo];
+			if ( input.value.length > 0 ) {
+				needToUpload = true;
+				break;
+			}
 		}
 		
 		if (needToUpload == false) {
@@ -81,14 +84,12 @@ function ArticleAdd__checkAndSubmit(form){
 	startUploadFiles(startSubmitForm);
 }
 </script>
-
-
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		<form onsubmit="ArticleAdd__checkAndSubmit(this); return false;" action="doAdd" method="POST" enctype="multipart/form-data">
-			<!-- /enctype="multipart/form-data" 첨부파일 form안에 파일을 입력하려면 데이타가 엄청나게 다른형식으로 나간다. jsp에선 엄청나게 복잡하지만 스트링 부트에선 그럴필요없이 이거면 된다. -->
-			<input type="hidden" name="genFileIdsStr" value="" />
-			<input type="hidden" name="boardId" value="${param.boardId}" />
+		<form onsubmit="ArticleAdd__checkAndSubmit(this); return false;"
+			action="doAdd" method="POST" enctype="multipart/form-data">
+			<input type="hidden" name="genFileIdsStr" value="" /> <input
+				type="hidden" name="boardId" value="${param.boardId}" />
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>제목</span>
@@ -107,24 +108,18 @@ function ArticleAdd__checkAndSubmit(form){
 						placeholder="내용을 입력해주세요."></textarea>
 				</div>
 			</div>
-			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>첨부파일 1</span>
+			<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
+				<div class="form-row flex flex-col lg:flex-row">
+					<div class="lg:flex lg:items-center lg:w-28">
+						<span>첨부파일 ${inputNo}</span>
+					</div>
+					<div class="lg:flex-grow">
+						<input type="file"
+							name="file__article__0__common__attachment__${inputNo}"
+							class="form-row-input w-full rounded-sm" />
+					</div>
 				</div>
-				<div class="lg:flex-grow">
-					<input type="file" name="file__article__0__common__attachment__1"
-						class="form-row-input w-full rounded-sm" />
-				</div>
-			</div>
-			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>첨부파일 2</span>
-				</div>
-				<div class="lg:flex-grow">
-					<input type="file" name="file__article__0__common__attachment__2"
-						class="form-row-input w-full rounded-sm" />
-				</div>
-			</div>
+			</c:forEach>
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>작성</span>
