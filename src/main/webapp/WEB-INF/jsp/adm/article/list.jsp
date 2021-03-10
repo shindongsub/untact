@@ -31,6 +31,9 @@
 					<a href="detail?id=${article.id}"
 						class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 					<p class="mt-2 text-gray-600">${article.body}</p>
+					<div>
+						<img src="${article.extra__thumbImg}" alt="" />
+					</div>
 				</div>
 				<div class="flex justify-between items-center mt-4">
 					<a href="detail?id=${article.id}"

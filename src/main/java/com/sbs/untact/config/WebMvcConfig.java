@@ -2,21 +2,25 @@ package com.sbs.untact.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-
+	@Value("${custom.genFileDirPath}")
+	private String genFileDirPath;
 
 	// CORS 허용
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**");
 	}
+
 
 	// beforeActionInterceptor 인터셉터 불러오기
 	@Autowired
@@ -43,7 +47,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		// beforeActionInterceptor 인터셉터가 모든 액션 실행전에 실행되도록 처리
 		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**")
-				.excludePathPatterns("/gen/**");
+		.excludePathPatterns("/gen/**");
 
 		// 어드민 필요
 		registry.addInterceptor(needAdminInterceptor).addPathPatterns("/adm/**")
@@ -68,6 +72,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.addPathPatterns("/adm/member/doLogin").addPathPatterns("/usr/member/login")
 				.addPathPatterns("/usr/member/doLogin").addPathPatterns("/usr/member/join")
 				.addPathPatterns("/usr/member/doJoin");
+	}
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/gen/**")
+				.addResourceLocations("file:///"+genFileDirPath+"/").setCachePeriod(20);
 	}
 
 
