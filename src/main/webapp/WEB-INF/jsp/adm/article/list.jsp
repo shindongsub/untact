@@ -22,7 +22,7 @@
 				});
 			</script>
 			<div class="flex-grow"></div>
-			<a href="add?boardId=${param.boardId}"
+			<a href="add?boardId=${board.id}"
 				class="bg-blue-400 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">글쓰기</a>
 		</div>
 		<div>
