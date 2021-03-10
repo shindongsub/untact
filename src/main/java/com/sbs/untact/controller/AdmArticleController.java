@@ -20,7 +20,7 @@ import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.util.Util;
 
-// 93강부터 다시들으세요.
+// 94강부터 다시들으세요.
 @Controller
 public class AdmArticleController extends BaseController {
 	@Autowired
@@ -121,31 +121,10 @@ public class AdmArticleController extends BaseController {
 
 		for (String fileInputName : fileMap.keySet()) {
 			MultipartFile multipartFile = fileMap.get(fileInputName);
-			String[] fileInputNameBits = fileInputName.split("__");
-
-			if (fileInputNameBits[0].equals("file") == false) {
-				continue;
+			if(multipartFile.isEmpty() == false) {
+				genFileService.save(multipartFile, newArticleId);
+				
 			}
-
-			int fileSize = (int) multipartFile.getSize();
-
-			if (fileSize <= 0) {
-				continue;
-			}
-
-			String relTypeCode = fileInputNameBits[1];
-			int relId = newArticleId;
-			String typeCode = fileInputNameBits[3];
-			String type2Code = fileInputNameBits[4];
-			int fileNo = Integer.parseInt(fileInputNameBits[5]);
-			String originFileName = multipartFile.getOriginalFilename();
-			String fileExtTypeCode = Util.getFileExtTypeCodeFromFileName(multipartFile.getOriginalFilename());
-			String fileExtType2Code = Util.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
-			String fileExt = Util.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
-			String fileDir = Util.getNowYearMonthDateStr();
-
-			genFileService.saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName, fileExtTypeCode,
-					fileExtType2Code, fileExt, fileSize, fileDir);
 		}
 
 		return addArticleRd;

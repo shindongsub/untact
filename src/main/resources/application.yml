@@ -16,6 +16,7 @@ mybatis:
   type-aliases-package: com.sbs.untact.dto
   
 custom:
+  genFileDirPath: F:\work\untact-file
   logging:
     dir: log
     level: debug
