@@ -45,7 +45,12 @@ function ArticleAdd__checkAndSubmit(form) {
 	}
 		}
 		
-		form.genFileIdsStr.value = genFileIdsStr;
+	const startSubmitForm = function(data) {
+		
+		if (data && data.body && data.body.genFileIdsStr) {
+			form.genFileIdsStr.value = data.body.genFileIdsStr;
+		}
+		
 		for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
 			const input = form["file__article__0__common__attachment__" + inputNo];
 			input.value = '';
