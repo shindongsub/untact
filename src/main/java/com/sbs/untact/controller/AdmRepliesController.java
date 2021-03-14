@@ -3,7 +3,6 @@ package com.sbs.untact.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.ReplyService;
-import com.sbs.untact.util.Util;
 
 @Controller
 public class AdmRepliesController {

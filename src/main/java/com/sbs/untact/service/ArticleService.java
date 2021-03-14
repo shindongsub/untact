@@ -77,7 +77,7 @@ public class ArticleService {
 		return getActorCanModifyRd(article, actorId);
 	}
 
-	public Article getPringtArticle(int id) {
+	public Article getForPrintArticle(int id) {
 		return articleDao.getForPrintArticle(id);
 	}
 
@@ -100,4 +100,5 @@ public class ArticleService {
 
 		return new ResultData("S-1", "성공하였습니다.", "id", id);
 	}
+
 }
