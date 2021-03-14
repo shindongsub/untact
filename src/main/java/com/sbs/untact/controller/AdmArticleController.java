@@ -20,7 +20,7 @@ import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
 
-// 94강부터 다시들으세요.
+// 강부터 다시들으세요.
 @Controller
 public class AdmArticleController extends BaseController {
 	@Autowired

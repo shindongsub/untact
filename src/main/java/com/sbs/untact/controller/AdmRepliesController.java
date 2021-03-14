@@ -16,7 +16,7 @@ import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.ReplyService;
 import com.sbs.untact.util.Util;
-//55강 할차례 입니다.
+
 @Controller
 public class AdmRepliesController {
 	@Autowired
