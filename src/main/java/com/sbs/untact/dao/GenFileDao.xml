@@ -30,9 +30,17 @@
 		WHERE 1
 		And relTypeCode = #{relTypeCode}
 		And relId = #{relId}
-		And typeCode = #{typeCode}
+		And typeCode =
+		#{typeCode}
 		And type2Code = #{type2Code}
 		And fileNo = #{fileNo}
+	</select>
+	<select id="getGenFiles" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
 	</select>
 	<update id="changeRelId">
 		UPDATE genFile
@@ -42,6 +50,16 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+		<delete id="deleteFiles">
+		DELETE FROM genFile
+		WHERE relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+	</delete>
+
+	<delete id="deleteFile">
+		DELETE FROM genFile
+		WHERE id = #{id}
+	</delete>
 </mapper>
 
 
