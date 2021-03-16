@@ -242,7 +242,7 @@ public class Util {
 		return true;
 	}
 	public static String numberFormat(int num) {
-		DecimalFormat df = new DecimalFormat("###,###,###");
+		DecimalFormat df = new DecimalFormat("###,###,###"); //파일 용량 쉼표로 끊어서 보여주기.
 
 		return df.format(num);
 	}
