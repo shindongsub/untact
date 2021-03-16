@@ -28,7 +28,7 @@ public class UsrArticleController {
 			return new ResultData("F-1","id를 입력해주세요.");
 		}
 		
-		Article article = articleService.getPringtArticle(id);
+		Article article = articleService.getForPrintArticle(id);
 		if(article == null) {
 			return new ResultData("F-2","존재하지 않는 게시물 번호입니다..");
 		}
