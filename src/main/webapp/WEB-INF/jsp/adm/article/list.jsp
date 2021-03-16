@@ -40,7 +40,7 @@
 						class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 					<c:if test="${article.extra__thumbImg != null}">
 						<a class="block" href="${detailUrl}">
-							<img class="max-w-sm" src="${article.extra__thumbImg}" alt="" />
+							<img class="max-w-sm" src="${article.extra__thumbImg}" alt="" /> <!-- max-w-sm tailwind에서 검색 이미지 미리보기 사이즈조정 -->
 						</a>
 					</c:if>
 					<a href="${detailUrl}" class="mt-2 text-gray-600 block">${article.body}</a>

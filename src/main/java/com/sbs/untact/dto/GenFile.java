@@ -26,21 +26,21 @@ public class GenFile {
 	private String fileExt;
 	private String fileDir;
 	private String originFileName;
-
+	
 	@JsonIgnore
 	public String getFilePath(String genFileDirPath) {
 		return genFileDirPath + getBaseFileUri();
 	}
-
+	
 	@JsonIgnore
 	private String getBaseFileUri() {
 		return "/" + relTypeCode + "/" + fileDir + "/" + getFileName();
 	}
 
-	private String getFileName() {
+	public String getFileName() {
 		return id + "." + fileExt;
 	}
-
+	
 	public String getForPrintUrl() {
 		return "/gen" + getBaseFileUri() + "?updateDate=" + updateDate;
 	}
