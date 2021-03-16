@@ -16,6 +16,7 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
+import com.sbs.untact.util.Util;
 @Controller
 public class UsrArticleController {
 	@Autowired
@@ -124,19 +125,19 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
-		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
+	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+		int id = Util.getAsInt(param.get("id"), 0);
 
-		
-		if (id == null) {
+		if (id == 0) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
 
-		if (title == null) {
+		if (Util.isEmpty("title")) {
 			return new ResultData("F-1", "title을 입력해주세요.");
 		}
 
-		if (body == null) {
+		if (Util.isEmpty("body")) {
 			return new ResultData("F-1", "body를 입력해주세요.");
 		}
 
@@ -145,13 +146,14 @@ public class UsrArticleController {
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
-		ResultData getActorCanModifyRd= articleService.getActorCanModifyRd(article, loginedMemberId);
-		if(getActorCanModifyRd.isFail()) {
-			return getActorCanModifyRd;
+
+		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMemberId);
+
+		if (actorCanModifyRd.isFail()) {
+			return actorCanModifyRd;
 		}
 
-		return articleService.modifyArticle(id, title, body);
+		return articleService.modifyArticle(param);
 	}
-
 }
 
